@@ -12,6 +12,13 @@ fusenUtil.addFusen = function(time){
     element += "<li class='webfusen-config-list'><div class='webfusen-config-menu-text'>background-color</div><div id='picker'><input type='text' id='custom' /></div></li>";
     element += "<input type='checkbox' id='transparent-window' />背景以外も含めて透過";
     element += "<li class='webfusen-config-list'><div class='webfusen-config-menu-text'>font-size</div></li>";
+    element += "<select id='font-size'>";
+    element += "<option value='1' class='select-menu'>1</option>";
+    element += "<option value='2' class='select-menu'>2</option>";
+    element += "<option value='3' class='select-menu'>3</option>";
+    element += "<option value='4' class='select-menu'>4</option>";
+    element += "<option value='5' class='select-menu'>5</option>";
+    element += "</select>";
     element += "</ul><input type='button' value='OK' id='option-send' /></div>";
     element += "<div class='webfusen-config-button'></div>";
     element +=　"</div>";
