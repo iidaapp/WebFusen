@@ -1,0 +1,86 @@
+.sp-container{
+    z-index: 99999990;    
+}
+
+.webfusen{
+    padding-top: 20px;
+    width: 220px;
+    height: 200px;
+    position: absolute !important;
+    right: 0;
+    top: 0;
+    z-index: 9999999;
+    min-width: 108px;
+    min-height: 20px;
+    background: rgba(100, 100, 100, 0.5) !important;
+    opacity: 1;
+}
+
+.webfusen-textarea-wrap{
+    width: 100%;
+    height: 100%;
+    resize: none;
+    padding: 5px;
+    box-sizing:border-box;
+}
+
+.webfusen-textarea{
+    width: 100%;
+    height: 100%;
+    border:0px;
+    resize: none;
+    padding: 0px;
+    background: none;
+}
+
+.webfusen-drag{
+    height: 20px;
+    width: 100%;
+    left: 0;
+    top: 0;
+    position: absolute;
+    cursor: move;
+    background: #74A8E8;
+}
+
+.webfusen-close{
+    text-align: center;
+    display: table;
+    position: absolute !important;
+    right: 0;
+    top: 0px;
+    width: 20px;
+    height: 20px;
+    background: #FF5042;
+    cursor: default;
+}
+
+.webfusen-char{
+display: table-cell;
+vertical-align:middle;
+}
+
+.webfusen-config-button{
+    background-image: url("images/iconmonstr-gear-icon-16.png");
+    left: 1px;
+    bottom: 1px;
+    position: absolute;
+    display: block;
+    width: 16px;
+    height: 16px;
+}
+
+.webfusen-config{
+    display:none;
+    background-color: Bisque; 
+}
+
+ul.webfusen-config-menu{
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+li.webfusen-config-list{
+    margin: 4px 0 4px 0;
+}
