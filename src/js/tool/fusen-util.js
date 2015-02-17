@@ -28,14 +28,20 @@ fusenUtil.addFusen = function(time){
         showAlpha: true,
         color: "rgba(255,255,255,0.5)",
         change : function(color) {
+
             if($("#" + time + ' #transparent-window').prop('checked')){
+
                 var colorRgb = color.toRgb();
                 var alpha = colorRgb.a;
                 $("#" + time).css("background-color", color.toHexString());
                 $("#" + time).css("opacity", alpha);
+
+                fusenUtil.fusenDataToJson($("#" + time));
+
             }else{
                 $("#" + time).css("background-color", color.toRgbString());
                 $("#" + time).css("opacity", 1);
+                fusenUtil.fusenDataToJson($("#" + time));
             }
         }
     });
@@ -60,6 +66,7 @@ fusenUtil.addFusen = function(time){
         color: "rgb(0,0,0)",
         change : function(color) {
             $("#" + time + " textarea").css("color", color.toHexString());
+            fusenUtil.fusenDataToJson($("#" + time));
         }
     });
 
@@ -74,6 +81,7 @@ fusenUtil.addFusen = function(time){
 
     $("#" + time + " input#webfusen-font-size-value").keyup(function() {
         $("#" + time + " .webfusen-textarea").css("font-size", parseInt($(this).val()));
+        fusenUtil.fusenDataToJson($("#" + time));
     });
 };
 
@@ -116,3 +124,18 @@ fusenUtil.importCss = function(cssName){
     (document.head||document.documentElement).appendChild(style);
 };
 
+fusenUtil.fusenDataToJson = function(fusenElement){
+    var url = $(location).attr('href');
+    var textarea = fusenElement.firstElementChild.nextElementSibling.nextElementSibling.firstElementChild;
+
+    var id = fusenElement.id;
+    var left = $(fusenElement).css("left");
+    var top = $(fusenElement).css("top");
+    var height = $(fusenElement).css("height");
+    var width = $(fusenElement).css("width");
+    var val = $(textarea).val();
+
+    item[id] = {"left":left, "top":top, "height":height, "width":width, "val":val};
+    var json = fusenUtil.stringify(item);
+    localStorage[url] = json;
+};

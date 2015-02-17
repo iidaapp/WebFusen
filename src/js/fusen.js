@@ -8,37 +8,12 @@ $(document).ready(function(){
     $(document).on("blur", ".webfusen-textarea", function(e){
 
         var element = e.currentTarget.parentElement.parentElement;
-        var textarea = e.currentTarget;
-
-        var id = e.currentTarget.parentElement.parentElement.id;
-        var left = $(element).css("left");
-        var top = $(element).css("top");
-        var height = $(element).css("height");
-        var width = $(element).css("width");
-        var val = $(textarea).val();
-
-        item[id] = {"left":left, "top":top, "height":height, "width":width, "val":val};
-        var json = fusenUtil.stringify(item);
-        
-        localStorage[url] = json;
+        fusenUtil.fusenDataToJson(element);
     });
 
     $(document).on("mouseup", ".webfusen-drag", function(e){
         var element = e.currentTarget.parentElement;
-        var textarea = e.currentTarget.nextElementSibling.nextElementSibling;
-
-        var id = e.currentTarget.parentElement.id;
-        var left = $(element).css("left");
-        var top = $(element).css("top");
-        var height = $(element).css("height");
-        var width = $(element).css("width");
-        var val = $(textarea).val();
-
-        item[id] = {"left":left, "top":top, "height":height, "width":width, "val":val};
-        var json = fusenUtil.stringify(item);
-
-        
-        localStorage[url] = json;
+        fusenUtil.fusenDataToJson(element);
     });
 
     $(document).on("click", ".webfusen-close", function(e){
