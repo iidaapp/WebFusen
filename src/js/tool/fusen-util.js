@@ -9,36 +9,76 @@ fusenUtil.addFusen = function(time){
     element += "<div class='webfusen-textarea-wrap'><textarea class='webfusen-textarea'></textarea></div>";
     element +=　"<div class='webfusen-config'>";
     element +=　"<ul class='webfusen-config-menu'>";
-    element += "<li class='webfusen-config-list'><div class='webfusen-config-menu-text'>background-color</div><div id='picker'><input type='text' id='custom' /></div></li>";
-    element += "<input type='checkbox' id='transparent-window' />背景以外も含めて透過";
-    element += "<li class='webfusen-config-list'><div class='webfusen-config-menu-text'>font-size</div></li>";
-    element += "<select id='font-size'>";
-    element += "<option value='1' class='select-menu'>1</option>";
-    element += "<option value='2' class='select-menu'>2</option>";
-    element += "<option value='3' class='select-menu'>3</option>";
-    element += "<option value='4' class='select-menu'>4</option>";
-    element += "<option value='5' class='select-menu'>5</option>";
-    element += "</select>";
-    element += "</ul><input type='button' value='OK' id='option-send' /></div>";
+    element += "<li class='webfusen-config-list'><div class='webfusen-config-menu-text'>background-color</div><div class='picker'><input type='text' id='webfusen-background-color' /></div>";
+    element += "<input type='checkbox' id='transparent-window' />背景以外も透過</li>";
+    element += "<li class='webfusen-config-list' id='webfusen-font-size'><div class='webfusen-config-menu-text'>font-size</div>";
+    element += "<input type='text' id='webfusen-font-size-value' size='3' maxlength='3' /> px";
+    element += "</li>";
+    element += "<li class='webfusen-config-list' id=''><div class='webfusen-config-menu-text'>font-color</div><div class='picker'><input type='text' id='webfusen-font-color' /></div>";
+    element += "</ul></div>";
     element += "<div class='webfusen-config-button'></div>";
     element +=　"</div>";
 
     $(document.body).append(element);
 
+    $("#" + time + " #webfusen-background-color").spectrum({
+        preferredFormat: "hex",
+        showInitial: true,
+        showInput: true,
+        showAlpha: true,
+        color: "rgba(255,255,255,0.5)",
+        change : function(color) {
+            if($("#" + time + ' #transparent-window').prop('checked')){
+                var colorRgb = color.toRgb();
+                var alpha = colorRgb.a;
+                $("#" + time).css("background-color", color.toHexString());
+                $("#" + time).css("opacity", alpha);
+            }else{
+                $("#" + time).css("background-color", color.toRgbString());
+                $("#" + time).css("opacity", 1);
+            }
+        }
+    });
+
+    $("#" + time + ' #transparent-window').click(function() {
+        var color = $("#" + time + " #webfusen-background-color").spectrum("get");
+        if($("#" + time + ' #transparent-window').prop('checked')){
+                var colorRgb = color.toRgb();
+                var alpha = colorRgb.a;
+            $("#" + time).css("background-color", color.toHexString());
+            $("#" + time).css("opacity", alpha);
+        }else{
+            $("#" + time).css("background-color", color.toRgbString());
+            $("#" + time).css("opacity", 1);
+        }
+    });
+
+    $("#" + time + " #webfusen-font-color").spectrum({
+        preferredFormat: "hex",
+        showInitial: true,
+        showInput: true,
+        color: "rgb(0,0,0)",
+        change : function(color) {
+            $("#" + time + " textarea").css("color", color.toHexString());
+        }
+    });
+
     $("#" + time).draggable();
     $("#" + time).resizable();
 
-  };
+    $("#" + time).on("click", ".webfusen-config-button", function(e){
+        var element = e.currentTarget.parentElement;
+        var target = e.currentTarget.previousElementSibling;
+        $(target).slideToggle();
+    });
+
+    $("#" + time + " input#webfusen-font-size-value").keyup(function() {
+        $("#" + time + " .webfusen-textarea").css("font-size", parseInt($(this).val()));
+    });
+};
 
 fusenUtil.stringify = function(obj) {
-    /// <summary>
-    /// オブジェクトをJSON文字列に変換する。
-    /// ※JSON文字列をオブジェクトに変換する場合はjQuery標準のparseJSONを使う。
-    ///
-    /// json = $.stringify(obj);
-    /// obj  = $.parseJSON(json);
-    /// </summary>
-    
+
     var t = typeof (obj);
     if (t != "object" || obj === null) {
         // simple data type

@@ -5,21 +5,6 @@ $(document).ready(function(){
 
     var json = null;
 
-    $(document).on("click", ".webfusen-config-button", function(e){
-        var element = e.currentTarget.parentElement;
-        var target = e.currentTarget.previousElementSibling;
-        $(target).toggle();
-
-        $("#" + this.parentElement.id + " #custom").spectrum({
-            preferredFormat: "hex",
-            showInitial: true,
-            showInput: true,
-            showAlpha: true,
-            color: "#000000"
-        });
-    });
-
-
     $(document).on("blur", ".webfusen-textarea", function(e){
 
         var element = e.currentTarget.parentElement.parentElement;
@@ -70,6 +55,21 @@ $(document).ready(function(){
         var json = fusenUtil.stringify(item);
         localStorage[url] = json;
     });
+
+    // $(document).on("click", "#option-send", function(e){
+    //     var backgroundColor = $("#webfusen-background-color").spectrum("get").toRgb();
+    //     var fontColoe = $("#webfusen-font-color").spectrum("get").toHex();
+    //     var element = e.currentTarget.parentElement.parentElement;
+
+    //     if($("#transparent-window").prop('checked')){
+
+    //     }else {
+
+    //     }
+
+
+
+    // });
 
     fusenUtil.importCss('css/jquery-ui.min.css');
     fusenUtil.importCss('css/spectrum.css');
