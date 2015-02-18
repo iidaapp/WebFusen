@@ -47,7 +47,7 @@ $(document).ready(function(){
 				var val = data.val;
 				val = escapeHTML(val);
 
-				var element = "<li class='fusen'>" + i + " : " + val + "<br /><p class='date'> - " + datetime.toLocaleString() + "</p></li>" ;
+				var element = "<li class='fusen'>" + i + " : " + val + "<br /><p class='date'> - " + datetime.toLocaleString() + "</p><img src='../css/images/iconmonstr-x-mark-3-icon-16.png'></li>" ;
 				$("div#list").append(element);
 
 				i++;

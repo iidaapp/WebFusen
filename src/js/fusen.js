@@ -6,14 +6,18 @@ $(document).ready(function(){
     var json = null;
 
     $(document).on("blur", ".webfusen-textarea", function(e){
-
         var element = e.currentTarget.parentElement.parentElement;
-        fusenUtil.fusenDataToJson(element);
+        fusenUtil.saveFusenData(element);
+    });
+
+    $(document).on("mousedown", ".webfusen", function(e){
+        var element = e.currentTarget;
+        fusenUtil.changeZIndex(element);
     });
 
     $(document).on("mouseup", ".webfusen-drag", function(e){
         var element = e.currentTarget.parentElement;
-        fusenUtil.fusenDataToJson(element);
+        fusenUtil.saveFusenData(element);
     });
 
     $(document).on("click", ".webfusen-close", function(e){
@@ -30,21 +34,6 @@ $(document).ready(function(){
         var json = fusenUtil.stringify(item);
         localStorage[url] = json;
     });
-
-    // $(document).on("click", "#option-send", function(e){
-    //     var backgroundColor = $("#webfusen-background-color").spectrum("get").toRgb();
-    //     var fontColoe = $("#webfusen-font-color").spectrum("get").toHex();
-    //     var element = e.currentTarget.parentElement.parentElement;
-
-    //     if($("#transparent-window").prop('checked')){
-
-    //     }else {
-
-    //     }
-
-
-
-    // });
 
     fusenUtil.importCss('css/jquery-ui.min.css');
     fusenUtil.importCss('css/spectrum.css');
@@ -64,6 +53,29 @@ $(document).ready(function(){
         $("#" + key).css("height", item[key].height);
         $("#" + key).css("width", item[key].width);
         $("#" + key + " .webfusen-textarea").val(item[key].val);
+
+        $("#" + key).css("opacity", item[key].opacity);
+        $("#" + key + ' #transparent-window').prop("checked", item[key].checked);
+
+        var color = item[key].bgColor;
+        var opacity = item[key].opacity;
+        var bgColor;
+
+        $("#" + key).css("background-color", item[key].bgColor);
+
+        if($("#" + key + ' #transparent-window').prop("checked")){
+            bgColor = color.replace(/rgb\((\d+), (\d+), (\d+)\)/,"rgba($1, $2, $3, " + opacity + ")");
+        }else{
+            bgColor = color;
+        }
+
+        $("#" + key + " #webfusen-background-color").spectrum("set", bgColor);            
+
+        $("#" + key + " textarea").css("color", item[key].textColor);
+        $("#" + key + " #webfusen-font-color").spectrum("set", item[key].textColor);
+
+        $("#" + key + " textarea").css("font-size", parseInt(item[key].textSize));
+        $("#" + key + " #webfusen-font-size-value").val(item[key].textSize);
     }
 
 });

@@ -2,6 +2,7 @@ var fusenUtil = {};
 
 fusenUtil.addFusen = function(time){
 
+    // fusenElement
     var element;
     element = "<div id='" + time + "' class='ui-widget-content webfusen'>";
     element += "<div class='webfusen-drag'></div>";
@@ -19,8 +20,12 @@ fusenUtil.addFusen = function(time){
     element += "<div class='webfusen-config-button'></div>";
     element +=　"</div>";
 
+    // fusenElement追加
     $(document.body).append(element);
+    var obj = $("#" + time);
+    var fusenElement = obj[0];
 
+    // 背景色設定
     $("#" + time + " #webfusen-background-color").spectrum({
         preferredFormat: "hex",
         showInitial: true,
@@ -36,29 +41,41 @@ fusenUtil.addFusen = function(time){
                 $("#" + time).css("background-color", color.toHexString());
                 $("#" + time).css("opacity", alpha);
 
-                fusenUtil.fusenDataToJson($("#" + time));
+                fusenUtil.saveFusenData(fusenElement);
 
             }else{
                 $("#" + time).css("background-color", color.toRgbString());
                 $("#" + time).css("opacity", 1);
-                fusenUtil.fusenDataToJson($("#" + time));
+                fusenUtil.saveFusenData(fusenElement);
             }
         }
     });
 
+    // 透明度フラグ設定
     $("#" + time + ' #transparent-window').click(function() {
         var color = $("#" + time + " #webfusen-background-color").spectrum("get");
+        var colorRgb = color.toRgb();
+        var alpha = colorRgb.a;
+        var opacity = $("#" + time).css("opacity");
+
         if($("#" + time + ' #transparent-window').prop('checked')){
-                var colorRgb = color.toRgb();
-                var alpha = colorRgb.a;
+
             $("#" + time).css("background-color", color.toHexString());
             $("#" + time).css("opacity", alpha);
+            $("#" + time + " #webfusen-background-color").spectrum("set", color);
+
         }else{
+
+            color.setAlpha(opacity);
             $("#" + time).css("background-color", color.toRgbString());
             $("#" + time).css("opacity", 1);
+            $("#" + time + " #webfusen-background-color").spectrum("set", color);
         }
+
+        fusenUtil.saveFusenData(fusenElement);
     });
 
+    // フォントカラー設定
     $("#" + time + " #webfusen-font-color").spectrum({
         preferredFormat: "hex",
         showInitial: true,
@@ -66,25 +83,29 @@ fusenUtil.addFusen = function(time){
         color: "rgb(0,0,0)",
         change : function(color) {
             $("#" + time + " textarea").css("color", color.toHexString());
-            fusenUtil.fusenDataToJson($("#" + time));
+            fusenUtil.saveFusenData(fusenElement);
         }
     });
 
+    // ドラッグ、リサイズ可能
     $("#" + time).draggable();
     $("#" + time).resizable();
 
+    // コンフィグボタンクリック時処理
     $("#" + time).on("click", ".webfusen-config-button", function(e){
         var element = e.currentTarget.parentElement;
         var target = e.currentTarget.previousElementSibling;
         $(target).slideToggle();
     });
 
+    // フォントサイズ変更処理
     $("#" + time + " input#webfusen-font-size-value").keyup(function() {
         $("#" + time + " .webfusen-textarea").css("font-size", parseInt($(this).val()));
-        fusenUtil.fusenDataToJson($("#" + time));
+        fusenUtil.saveFusenData(fusenElement);
     });
 };
 
+// JSON解析処理
 fusenUtil.stringify = function(obj) {
 
     var t = typeof (obj);
@@ -116,6 +137,7 @@ fusenUtil.stringify = function(obj) {
     }
 };
 
+// CSSファイルインポート処理
 fusenUtil.importCss = function(cssName){
     var style = document.createElement('link');
     style.rel = 'stylesheet';
@@ -124,7 +146,8 @@ fusenUtil.importCss = function(cssName){
     (document.head||document.documentElement).appendChild(style);
 };
 
-fusenUtil.fusenDataToJson = function(fusenElement){
+// fusenデータ保存処理
+fusenUtil.saveFusenData = function(fusenElement){
     var url = $(location).attr('href');
     var textarea = fusenElement.firstElementChild.nextElementSibling.nextElementSibling.firstElementChild;
 
@@ -135,7 +158,18 @@ fusenUtil.fusenDataToJson = function(fusenElement){
     var width = $(fusenElement).css("width");
     var val = $(textarea).val();
 
-    item[id] = {"left":left, "top":top, "height":height, "width":width, "val":val};
+    var bgColor = $(fusenElement).css("background-color");
+    var opacity = $(fusenElement).css("opacity");
+    var checked = $(fusenElement).children(".webfusen-config").children(".webfusen-config-menu").children(".webfusen-config-list").children("#transparent-window").prop("checked");
+    var textSize = textarea.parentElement.nextElementSibling.childNodes[0].childNodes[1].childNodes[1].value;
+    var textColor = $(textarea).css("color");
+
+    item[id] = {"left":left, "top":top, "height":height, "width":width, "val":val, "bgColor":bgColor, "opacity":opacity, "checked":checked, "textSize":textSize, "textColor":textColor};
     var json = fusenUtil.stringify(item);
     localStorage[url] = json;
+};
+
+fusenUtil.changeZIndex = function(fusenElement){
+    $(".webfusen").css("z-index", 9999999);
+    $(fusenElement).css("z-index", 99999999);
 };
