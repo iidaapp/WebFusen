@@ -14,6 +14,7 @@ li.menu{
 }
 
 li.fusen{
+    list-style: none;
     margin: 4px 0 4px 0;
 }
 
@@ -27,8 +28,12 @@ li.sep {
     background-color: #888888;
 }
 
-p.date{
+div.date{
+    padding: 6px 0 6px 0;
     font-size: 8px;
+    background-image: url(images/iconmonstr-x-mark-3-icon-16.png);
+    background-position: right;
+    background-repeat: no-repeat;
 }
 
 a.menu{

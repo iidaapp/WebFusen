@@ -46,8 +46,12 @@ $(document).ready(function(){
 				datetime.setTime(key);
 				var val = data.val;
 				val = escapeHTML(val);
+				var str = "";
+				if(val.length > 10){
+					str = val.substr(0, 10)  + "...";
+				}
 
-				var element = "<li class='fusen'>" + i + " : " + val + "<br /><p class='date'> - " + datetime.toLocaleString() + "</p><img src='../css/images/iconmonstr-x-mark-3-icon-16.png'></li>" ;
+				var element = "<li class='fusen'>" + i + " : " + str + "<br /><div class='date'> - " + datetime.toLocaleString() + "</li>" ;
 				$("div#list").append(element);
 
 				i++;
