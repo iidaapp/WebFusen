@@ -1,5 +1,6 @@
 body{
-    width: 150px;
+    width: 140px;
+    font-family: 'Hiragino Kaku Gothic Pro',Meiryo,'MS PGothic',Helvetica,Arial,sans-serif;
 }
 
 ul{
@@ -7,10 +8,10 @@ ul{
     margin: 0;
 }
 
-li.menu{
+li.popup-menu{
     list-style: none;
-    height: 20px;
-    margin: 4px 0 4px 0;
+    height: 18px;
+    margin: 6px 0 4px 0;
 }
 
 li.fusen{
@@ -23,6 +24,7 @@ li.no-fusen{
     color: #a9a9a9;
 }
 
+
 li.sep {
     height: 1px;
     background-color: #888888;
@@ -31,12 +33,38 @@ li.sep {
 div.date{
     padding: 6px 0 6px 0;
     font-size: 8px;
+}
+
+div.trash{
+    cursor: pointer;
     background-image: url(images/ico_ashcan1_1.gif);
     background-position: right;
     background-repeat: no-repeat;
+    height: 12px;
+    width: 11px;
+    position: relative;
+    top: -20px;
+    left: 125px;
 }
 
-a.menu{
+#delete-all-fusen{
+    text-align: right;
+    font-size: 10px;
+}
+
+#menu-add{
+    background-image: url(images/ico_plus14_10.gif);
+    background-repeat: no-repeat;
+    background-position: left;
+}
+
+#menu-option{
+    background-image: url(images/iconmonstr-gear-icon-16.png);
+    background-repeat: no-repeat;
+    background-position: left;
+}
+
+a.popup-content{
 	cursor: pointer;
+    margin-left: 16px;
 }
-

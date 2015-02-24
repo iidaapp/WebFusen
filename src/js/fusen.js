@@ -1,9 +1,10 @@
 var url = $(location).attr('href');
-var item = {};
 
 $(document).ready(function(){
 
     var json = null;
+
+    fusenUtil.readyModal();
 
     $(document).on("blur", ".webfusen-textarea", function(e){
         var element = e.currentTarget.parentElement.parentElement;
@@ -23,16 +24,7 @@ $(document).ready(function(){
     $(document).on("click", ".webfusen-close", function(e){
         var element = e.currentTarget.parentElement;
         var id = element.id;
-        $(element).remove();
-        delete item[id];
-
-        if(Object.keys(item).length === 0){
-            localStorage.removeItem(url);
-            return;
-        }
-
-        var json = fusenUtil.stringify(item);
-        localStorage[url] = json;
+        fusenUtil.deleteFusen(id);
     });
 
     fusenUtil.importCss('css/jquery-ui.min.css');
@@ -89,14 +81,18 @@ chrome.runtime.onMessage.addListener(function(msg, sender, sendResponse) {
 
     } else if(msg.command && (msg.command === "delete_all_fusen")){
 
-        $(".webfusen").remove();
-        item = {};
-        localStorage.removeItem(url);
+        fusenUtil.openModal();
 
     } else if(msg.command && (msg.command === "get_fusen_information")){
 
-        var json = fusenUtil.stringify(item);
+        var json = localStorage.getItem(url);
         sendResponse(json);
+
+    } else if(msg.command && (msg.command === "delete_fusen")){
+
+        var targetid = msg.targetid;
+        console.log(targetid);
+        fusenUtil.deleteFusen(targetid);
     }
 
 });

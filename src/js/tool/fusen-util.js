@@ -87,10 +87,6 @@ fusenUtil.addFusen = function(time){
         }
     });
 
-    // ドラッグ、リサイズ可能
-    $("#" + time).draggable();
-    $("#" + time).resizable();
-
     // コンフィグボタンクリック時処理
     $("#" + time).on("click", ".webfusen-config-button", function(e){
         var element = e.currentTarget.parentElement;
@@ -103,6 +99,14 @@ fusenUtil.addFusen = function(time){
         $("#" + time + " .webfusen-textarea").css("font-size", parseInt($(this).val()));
         fusenUtil.saveFusenData(fusenElement);
     });
+
+    // ドラッグ、リサイズ可能
+    $("#" + time).draggable();
+    $("#" + time).resizable();
+
+    fusenUtil.saveFusenData(fusenElement);
+
+
 };
 
 // JSON解析処理
@@ -164,6 +168,11 @@ fusenUtil.saveFusenData = function(fusenElement){
     var textSize = textarea.parentElement.nextElementSibling.childNodes[0].childNodes[1].childNodes[1].value;
     var textColor = $(textarea).css("color");
 
+    var json = localStorage.getItem(url);
+    var item = $.parseJSON(json);
+    if(item === null){
+        item = {};
+    }
     item[id] = {"left":left, "top":top, "height":height, "width":width, "val":val, "bgColor":bgColor, "opacity":opacity, "checked":checked, "textSize":textSize, "textColor":textColor};
     var json = fusenUtil.stringify(item);
     localStorage[url] = json;
@@ -173,3 +182,101 @@ fusenUtil.changeZIndex = function(fusenElement){
     $(".webfusen").css("z-index", 9999999);
     $(fusenElement).css("z-index", 99999999);
 };
+
+fusenUtil.deleteFusen = function(id){
+    var json = localStorage.getItem(url);
+    if(typeof json === "undefined" || json === null){
+        return;
+    }
+    var item = $.parseJSON(json);
+
+    $("#" + id).remove();
+    delete item[id];
+
+    if(Object.keys(item).length === 0){
+        localStorage.removeItem(url);
+        return;
+    }
+
+    json = fusenUtil.stringify(item);
+    localStorage[url] = json;
+
+    return item;
+};
+
+fusenUtil.deleteFusenAll = function(){
+    var json = localStorage.getItem(url);
+    if(typeof json === "undefined" || json === null){
+        return;
+    }
+    var item = $.parseJSON(json);
+
+    $(".webfusen").remove();
+    item = {};
+    localStorage.removeItem(url);
+
+    return item;
+};
+
+fusenUtil.readyModal = function(){
+
+    var modalElement = "<div class='webfusen-modal'>";
+    modalElement += '<h2>Delete All Fusen</h2>';
+    modalElement += '<p>Are you sure you want to delete all Fusen data ?</p><br />';
+    modalElement += '<div class="webfusen-modal-cancel webfusen-modal-button">Cancel</div>';
+    modalElement += '<div class="webfusen-modal-confirm webfusen-modal-button">OK</div>';
+    modalElement += '</div>';
+
+    var overlayElement = "<div class='webfusen-modal-overlay'></div>"
+
+    $(document.body).append(overlayElement);
+    $(document.body).append(modalElement);
+
+};
+
+fusenUtil.openModal = function(){
+    fusenUtil.centeringModalSyncer();
+
+    $(".webfusen-modal").fadeIn("slow");
+    $(".webfusen-modal-overlay").fadeIn("slow");
+
+    $(window).resize(fusenUtil.centeringModalSyncer());
+
+    $(".webfusen-modal-overlay,.webfusen-modal-cancel").unbind().click(function(event) {
+        $(".webfusen-modal-overlay,.webfusen-modal").fadeOut("slow");
+    });
+
+    $(".webfusen-modal-confirm").unbind().click(function(event) {
+        fusenUtil.deleteFusenAll();
+        $(".webfusen-modal-overlay,.webfusen-modal").fadeOut("slow");
+    });
+};
+
+//センタリングをする関数
+fusenUtil.centeringModalSyncer = function(){
+
+    //画面(ウィンドウ)の幅を取得し、変数[w]に格納
+    var w = $(window).width();
+
+    //画面(ウィンドウ)の高さを取得し、変数[h]に格納
+    var h = $(window).height();
+
+    //コンテンツ(#modal-content)の幅を取得し、変数[cw]に格納
+    var cw = $(".webfusen-modal").outerWidth(true);
+
+    //コンテンツ(#modal-content)の高さを取得し、変数[ch]に格納
+    var ch = $(".webfusen-modal").outerHeight(true);
+
+    //コンテンツ(#modal-content)を真ん中に配置するのに、左端から何ピクセル離せばいいか？を計算して、変数[pxleft]に格納
+    var pxleft = ((w - cw)/2);
+
+    //コンテンツ(#modal-content)を真ん中に配置するのに、上部から何ピクセル離せばいいか？を計算して、変数[pxtop]に格納
+    var pxtop = ((h - ch)/2);
+
+    //[#modal-content]のCSSに[left]の値(pxleft)を設定
+    $(".webfusen-modal").css({"left": pxleft + "px"});
+
+    //[#modal-content]のCSSに[top]の値(pxtop)を設定
+    $(".webfusen-modal").css({"top": pxtop + "px"});
+
+}

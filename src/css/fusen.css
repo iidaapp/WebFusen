@@ -14,6 +14,7 @@
     min-height: 20px;
     background: rgba(255,255,255,0.5);
     opacity: 1;
+    font-family: 'Hiragino Kaku Gothic Pro',Meiryo,'MS PGothic',Helvetica,Arial,sans-serif;
 }
 
 .webfusen-textarea-wrap{
@@ -40,7 +41,7 @@
     top: 0;
     position: absolute;
     cursor: move;
-    background: #74A8E8;
+    background: #AFEEEE;
 }
 
 .webfusen-close{
@@ -53,11 +54,12 @@
     height: 20px;
     background: #FF5042;
     cursor: default;
+    font-size: 10px;
 }
 
 .webfusen-char{
-display: table-cell;
-vertical-align:middle;
+    display: table-cell;
+    vertical-align:middle;
 }
 
 .webfusen-config-button{
@@ -72,7 +74,7 @@ vertical-align:middle;
 
 .webfusen-config{
     display:none;
-    background-color: Bisque; 
+    background-color: #DCDCDC; 
 }
 
 ul.webfusen-config-menu{
@@ -83,8 +85,43 @@ ul.webfusen-config-menu{
 
 li.webfusen-config-list{
     margin: 4px 0 8px 0;
+    font-size: 10px;
 }
 
 .webfusen-config-menu-text{
     font-weight: bold;
+}
+
+.webfusen-modal{
+    width:50%;
+    margin:0;
+    padding:10px 20px;
+    border:2px solid #aaa;
+    background:#fff;
+    position:fixed;
+    display: none;
+    z-index: 99999999999;
+}
+
+.webfusen-modal-button{
+    text-align: center;
+    text-decoration:underline;
+    width: 50px;
+    color:#00f;
+}
+
+.webfusen-modal-button:hover{
+    cursor:pointer;
+    color:#f00;
+}
+
+.webfusen-modal-overlay{
+    z-index:99999999900;
+    display:none;
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:120%;
+    background-color:rgba(0,0,0,0.75);
 }
