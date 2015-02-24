@@ -28,7 +28,7 @@
 
     "content_scripts": [{
         "matches": ["<all_urls>"],
-        "js": ["js/tool/jquery-1.11.2.min.js", "js/tool/jquery-ui.min.js", "js/tool/spectrum.js", "js/tool/fusen-util.js","js/fusen.js"],
+        "js": ["js/tool/jquery-1.11.2.min.js", "js/tool/jquery-ui.min.js", "js/tool/spectrum.js", "js/fusen-util.js","js/fusen.js"],
         "run_at": "document_idle"
     }],
 
