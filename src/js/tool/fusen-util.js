@@ -222,7 +222,7 @@ fusenUtil.readyModal = function(){
 
     var modalElement = "<div class='webfusen-modal'>";
     modalElement += '<h2>Delete All Fusen</h2>';
-    modalElement += '<p>Are you sure you want to delete all Fusen data from this page ?</p><br />';
+    modalElement += '<p>Are you sure you want to delete all Fusen data ?</p><br />';
     modalElement += '<div class="webfusen-modal-cancel webfusen-modal-button">Cancel</div>';
     modalElement += '<div class="webfusen-modal-confirm webfusen-modal-button">OK</div>';
     modalElement += '</div>';

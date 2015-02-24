@@ -1,6 +1,6 @@
 var item = {};
 
-$("#add-fusen").click(function(){
+$("#add").click(function(){
 	chrome.tabs.getSelected(null, function(tab){
         chrome.tabs.sendMessage(tab.id, {
             command: "add_fusen"

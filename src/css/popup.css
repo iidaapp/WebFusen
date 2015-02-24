@@ -53,7 +53,7 @@ div.trash{
 }
 
 #menu-add{
-    background-image: url(images/iconmonstr-plus-4-icon-16.png);
+    background-image: url(images/ico_plus14_10.gif);
     background-repeat: no-repeat;
     background-position: left;
 }
@@ -66,5 +66,5 @@ div.trash{
 
 a.popup-content{
 	cursor: pointer;
-    margin-left: 20px;
+    margin-left: 16px;
 }
