@@ -168,44 +168,25 @@ fusenUtil.saveFusenData = function(fusenElement){
 
     chrome.storage.local.get(function(fusenData) {
 
-        for(var urlData in fusenData){
-
-            if(url === urlData){
-
-                for(var itemData in fusenData[urlData]){
-
-                   fusenData[urlData][id] = {"left":left, "top":top, "height":height, "width":width, "val":val, "bgColor":bgColor, "opacity":opacity, "checked":checked, "textSize":textSize, "textColor":textColor};
-                }
-            }
+        if(url in fusenData){
+            fusenData[url][id] = {"left":left, "top":top, "height":height, "width":width, "val":val, "bgColor":bgColor, "opacity":opacity, "checked":checked, "textSize":textSize, "textColor":textColor};
+        }else{
+            var item = {};
+            item[id] = {"left":left, "top":top, "height":height, "width":width, "val":val, "bgColor":bgColor, "opacity":opacity, "checked":checked, "textSize":textSize, "textColor":textColor};
+            fusenData[url] = item;
         }
-
+        
         chrome.storage.local.set(fusenData, function () {
-            chrome.storage.local.get(url, function(fusenData) {
-                for(var item in fusenData){
-                    console.log(fusenData[item]);
-                    for(var id in fusenData[item]){
-                        console.log(fusenData[item][id]);
+            chrome.storage.local.get(url, function(urlData) {
+                for(var item in urlData){
+                    console.log(urlData[item]);
+                    for(var id in urlData[item]){
+                        console.log(urlData[item][id]);
                     }
                 }
             });
         });
     });
-
-
-    var json = localStorage.getItem(url);
-    var item = $.parseJSON(json);
-    if(item === null){
-        item = {};
-    }
-    item[id] = {"left":left, "top":top, "height":height, "width":width, "val":val, "bgColor":bgColor, "opacity":opacity, "checked":checked, "textSize":textSize, "textColor":textColor};
-
-    var data = {};
-
-
-
-
-    var json = fusenUtil.stringify(item);
-    localStorage[url] = json;
 };
 
 
@@ -219,39 +200,35 @@ fusenUtil.deleteFusen = function(id){
 
     chrome.storage.local.get(function(fusenData) {
 
-        for(var urlData in fusenData){
+        if(url in fusenData){
 
-            if(url === urlData){
-                if(fusenData[urlData] === null || fusenData[urlData] === {}){
-                    return;
-                }
-            } 
+            if(fusenData[url] === null || fusenData[url] === {}){
+                return;
+            }
 
             $("#" + id).remove();
-            delete fusenData[urlData][id];
+            delete fusenData[url][id];
 
-            if(Object.keys(fusenData[urlData]).length === 0){
-               delete fusenData[urlData];
+            if(Object.keys(fusenData[url]).length === 0){
+               delete fusenData[url];
             }
+
+            chrome.storage.local.set(fusenData, function () {
+
+                chrome.storage.local.get(url, function(fusenData_new) {
+                    for(var item in fusenData_new){
+                        console.log(fusenData_new[item]);
+                        for(var id in fusenData_new[item]){
+                            console.log(fusenData_new[item][id]);
+                        }
+                    }
+                });
+            });
         }
 
-        chrome.storage.local.set(fusenData, function () {
-            chrome.storage.local.get(url, function(fusenData) {
-                for(var item in fusenData){
-                    console.log(fusenData[item]);
-                    for(var id in fusenData[item]){
-                        console.log(fusenData[item][id]);
-                    }
-                }
-            });
-        });
+
     });
 
-
-    json = fusenUtil.stringify(item);
-    localStorage[url] = json;
-
-    return item;
 };
 
 
@@ -259,8 +236,22 @@ fusenUtil.deleteFusenAll = function(){
     chrome.storage.local.get(function(fusenData) {
 
         for(var urlData in fusenData){
+            if(url === urlData){
 
-            if(url === urlData){}
+                console.log("delete all fusen this page.");
+                $(".webfusen").remove();
+                item = {};
+                chrome.storage.local.remove(url,function(){
+                    chrome.storage.local.get(url, function(items){
+                        if(items === {} || items === null){
+                            console.log("delete all fusen : ok");
+                        }else{
+                            console.log("delete all fusen : ng");
+                        }
+                    });
+                });
+                return;
+           }
         }
     });
 };

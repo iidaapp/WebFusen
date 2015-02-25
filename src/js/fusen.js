@@ -31,45 +31,51 @@ $(document).ready(function(){
     fusenUtil.importCss('css/spectrum.css');
     fusenUtil.importCss('css/fusen.css');
 
-    json = localStorage.getItem(url);
-    if(typeof json === "undefined" || json === null){
-        return;
-    }
+    chrome.storage.local.get(url, function(urlData) {
 
-    item = $.parseJSON(json);
+        for(var item in urlData){
 
-    for (var key in item) {
-        fusenUtil.addFusen(key);
-        $("#" + key).css("left", item[key].left);
-        $("#" + key).css("top", item[key].top);
-        $("#" + key).css("height", item[key].height);
-        $("#" + key).css("width", item[key].width);
-        $("#" + key + " .webfusen-textarea").val(item[key].val);
+            console.log(urlData[item]);
 
-        $("#" + key).css("opacity", item[key].opacity);
-        $("#" + key + ' #transparent-window').prop("checked", item[key].checked);
+            for(var id in urlData[item]){
 
-        var color = item[key].bgColor;
-        var opacity = item[key].opacity;
-        var bgColor;
+                console.log(urlData[item][id]);
 
-        $("#" + key).css("background-color", item[key].bgColor);
+                fusenUtil.addFusen(id);
+                $("#" + id).css("left", urlData[item][id].left);
+                $("#" + id).css("top", urlData[item][id].top);
+                $("#" + id).css("height", urlData[item][id].height);
+                $("#" + id).css("width", urlData[item][id].width);
+                $("#" + id + " .webfusen-textarea").val(urlData[item][id].val);
 
-        if($("#" + key + ' #transparent-window').prop("checked")){
-            bgColor = color.replace(/rgb\((\d+), (\d+), (\d+)\)/,"rgba($1, $2, $3, " + opacity + ")");
-        }else{
-            bgColor = color;
+                $("#" + id).css("opacity", urlData[item][id].opacity);
+                $("#" + id + ' #transparent-window').prop("checked", urlData[item][id].checked);
+
+                var color = urlData[item][id].bgColor;
+                var opacity = urlData[item][id].opacity;
+                var bgColor;
+
+                $("#" + id).css("background-color", urlData[item][id].bgColor);
+
+                if($("#" + id + ' #transparent-window').prop("checked")){
+                    bgColor = color.replace(/rgb\((\d+), (\d+), (\d+)\)/,"rgba($1, $2, $3, " + opacity + ")");
+                }else{
+                    bgColor = color;
+                }
+
+                $("#" + id + " #webfusen-background-color").spectrum("set", bgColor);            
+
+                $("#" + id + " textarea").css("color", urlData[item][id].textColor);
+                $("#" + id + " #webfusen-font-color").spectrum("set", urlData[item][id].textColor);
+
+                $("#" + id + " textarea").css("font-size", parseInt(urlData[item][id].textSize));
+                $("#" + id + " #webfusen-font-size-value").val(urlData[item][id].textSize);
+            }
         }
 
-        $("#" + key + " #webfusen-background-color").spectrum("set", bgColor);            
+    });
 
-        $("#" + key + " textarea").css("color", item[key].textColor);
-        $("#" + key + " #webfusen-font-color").spectrum("set", item[key].textColor);
-
-        $("#" + key + " textarea").css("font-size", parseInt(item[key].textSize));
-        $("#" + key + " #webfusen-font-size-value").val(item[key].textSize);
-    }
-
+    return;
 });
 
 chrome.runtime.onMessage.addListener(function(msg, sender, sendResponse) {
@@ -85,8 +91,12 @@ chrome.runtime.onMessage.addListener(function(msg, sender, sendResponse) {
 
     } else if(msg.command && (msg.command === "get_fusen_information")){
 
-        var json = localStorage.getItem(url);
-        sendResponse(json);
+        var item;
+        chrome.storage.local.get(url, function(fusenData) {
+            item = fusenData;
+            var json = fusenUtil.stringify(item);
+            sendResponse(json);
+        });    
 
     } else if(msg.command && (msg.command === "delete_fusen")){
 
