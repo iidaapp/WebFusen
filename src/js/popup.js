@@ -1,5 +1,3 @@
-var item = {};
-
 $("#add-fusen").click(function(){
 	chrome.tabs.getSelected(null, function(tab){
         chrome.tabs.sendMessage(tab.id, {
@@ -27,13 +25,10 @@ var escapeHTML = function(val) {
 
 $(document).ready(function(){
 	chrome.tabs.getSelected(null, function(tab){
-        chrome.tabs.sendMessage(tab.id, {command: "get_fusen_information"}, function(response){
+		
+        chrome.tabs.sendMessage(tab.id, {command: "get_fusen_information"}, function(jsonData){
 
-        	console.log(response);
-        	item = JSON.parse(response);
-			console.log(item);
-
-        	if(typeof response === "undefined" || response === null || Object.keys(item).length === 0){
+        	if(jsonData === "undefined" || jsonData === null){
     	        var empty = "<li class='no-fusen'>( no Fusen )</li>" ;
 				$("div#list").append(empty);
 				$("#delete-all-fusen").remove();
@@ -41,14 +36,18 @@ $(document).ready(function(){
 				return;
 	        }
 
-			var i = 1;
-			for (var key in item) {
+        	console.log(jsonData);
+        	urlData = JSON.parse(jsonData);
+			console.log(urlData);
 
-				var data = item[key];
-				console.log(data);
+			var i = 1;
+			for (var id in urlData) {
+
+				var fusenData = urlData[id];
+				console.log(fusenData);
 				var datetime = new Date();
-				datetime.setTime(key);
-				var val = data.val;
+				datetime.setTime(id);
+				var val = fusenData.val;
 				val = escapeHTML(val);
 
 				console.log(val);
@@ -62,7 +61,7 @@ $(document).ready(function(){
 
 				console.log(str);
 
-				var element = "<li class='fusen' id='" + key + "''>";
+				var element = "<li class='fusen' id='" + id + "''>";
 				element += i + " : " + str + "<br />";
 				element += "<div class='date'> - " + datetime.toLocaleString() + "</div>";
 				element += "<div class='trash'>";
@@ -70,7 +69,7 @@ $(document).ready(function(){
 				element += "</li>";
 				$("div#list").append(element);
 
-				$("#" + key).children(".trash").click(function(){
+				$("#" + id).children(".trash").click(function(){
 					var targetid = this.parentElement.id;
 					chrome.tabs.getSelected(null, function(tab){
 				        chrome.tabs.sendMessage(tab.id, {

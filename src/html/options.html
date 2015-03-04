@@ -1,15 +1,40 @@
 <!DOCTYPE html>
+<meta charset="UTF-8">
 <html>
 	<head>
 		<title></title>
-		<link rel="stylesheet" type="text/css" href="../css/option.css">
 		<script type="text/javascript" src="../js/tool/jquery-1.11.2.min.js"></script>
 		<script type="text/javascript" src="../js/tool/jquery-ui.min.js"></script>
+		<script type="text/javascript" src="../js/tool/jquery.mixitup.js"></script>
+		
+		<script type="text/javascript" src="../js/tool/spectrum.js"></script>
+		<script type="text/javascript" src="../js/tool/fusen-util.js"></script>
+
+		<script type="text/javascript" src="../js/option-util.js"></script>
 		<script type="text/javascript" src="../js/option.js"></script>
+		<link rel="stylesheet" type="text/css" href="../css/spectrum.css">
+		<link rel="stylesheet" type="text/css" href="../css/option.css">
 	</head>
 	<body>
-	<input type="text" id="text" value="" placeholder="">
-	<input type="submit" id="hoge" value="hoge">
+
+		<div class="controls">
+			<div id="control-filter">
+				<label>Filter:</label>
+				<button class="filter active" data-filter="all">All</button>
+				<button class="filter" data-filter=".category-1">http://www.google.co.jp/</button>
+				<button class="filter" data-filter=".category-2">Category 2</button>
+			</div>
+
+			<div id="control-sort">
+				<label>Sort:</label>
+				<button class="sort" data-sort="my-order:asc">Ascending Order</button>
+				<button class="sort" data-sort="my-order:desc">Descending Order</button>
+			</div>
+		</div>
+
+		<div id="Container">
+		</div>
+
 	</body>
 
 </html>

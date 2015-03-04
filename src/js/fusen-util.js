@@ -1,3 +1,4 @@
+var fusenData = {};
 var fusenUtil = {};
 
 fusenUtil.addFusen = function(time){
@@ -8,8 +9,8 @@ fusenUtil.addFusen = function(time){
     element += "<div class='webfusen-drag'></div>";
     element += "<div class='webfusen-close'><div class = 'webfusen-char'>×</div></div>";
     element += "<div class='webfusen-textarea-wrap'><textarea class='webfusen-textarea'></textarea></div>";
-    element +=　"<div class='webfusen-config'>";
-    element +=　"<ul class='webfusen-config-menu'>";
+    element += "<div class='webfusen-config'>";
+    element += "<ul class='webfusen-config-menu'>";
     element += "<li class='webfusen-config-list'><div class='webfusen-config-menu-text'>background-color</div><div class='picker'><input type='text' id='webfusen-background-color' /></div>";
     element += "<input type='checkbox' id='transparent-window' />背景以外も透過</li>";
     element += "<li class='webfusen-config-list' id='webfusen-font-size'><div class='webfusen-config-menu-text'>font-size</div>";
@@ -18,7 +19,7 @@ fusenUtil.addFusen = function(time){
     element += "<li class='webfusen-config-list' id=''><div class='webfusen-config-menu-text'>font-color</div><div class='picker'><input type='text' id='webfusen-font-color' /></div>";
     element += "</ul></div>";
     element += "<div class='webfusen-config-button'></div>";
-    element +=　"</div>";
+    element += "</div>";
 
     // fusenElement追加
     $(document.body).append(element);
@@ -166,25 +167,23 @@ fusenUtil.saveFusenData = function(fusenElement){
     var textSize = textarea.parentElement.nextElementSibling.childNodes[0].childNodes[1].childNodes[1].value;
     var textColor = $(textarea).css("color");
 
-    chrome.storage.local.get(function(fusenData) {
 
-        if(url in fusenData){
-            fusenData[url][id] = {"left":left, "top":top, "height":height, "width":width, "val":val, "bgColor":bgColor, "opacity":opacity, "checked":checked, "textSize":textSize, "textColor":textColor};
-        }else{
-            var item = {};
-            item[id] = {"left":left, "top":top, "height":height, "width":width, "val":val, "bgColor":bgColor, "opacity":opacity, "checked":checked, "textSize":textSize, "textColor":textColor};
-            fusenData[url] = item;
-        }
-        
-        chrome.storage.local.set(fusenData, function () {
-            chrome.storage.local.get(url, function(urlData) {
-                for(var item in urlData){
-                    console.log(urlData[item]);
-                    for(var id in urlData[item]){
-                        console.log(urlData[item][id]);
-                    }
+    if(url in fusenUtil.fusenData){
+        fusenUtil.fusenData[url][id] = {"left":left, "top":top, "height":height, "width":width, "val":val, "bgColor":bgColor, "opacity":opacity, "checked":checked, "textSize":textSize, "textColor":textColor};
+    }else{
+        var item = {};
+        item[id] = {"left":left, "top":top, "height":height, "width":width, "val":val, "bgColor":bgColor, "opacity":opacity, "checked":checked, "textSize":textSize, "textColor":textColor};
+        fusenUtil.fusenData[url] = item;
+    }
+    
+    chrome.storage.local.set(fusenUtil.fusenData, function () {
+        chrome.storage.local.get(url, function(urlData) {
+            for(var item in urlData){
+                console.log(urlData[item]);
+                for(var id in urlData[item]){
+                    console.log(urlData[item][id]);
                 }
-            });
+            }
         });
     });
 };
@@ -198,44 +197,40 @@ fusenUtil.changeZIndex = function(fusenElement){
 
 fusenUtil.deleteFusen = function(id){
 
-    chrome.storage.local.get(function(fusenData) {
+    if(url in fusenUtil.fusenData){
 
-        if(url in fusenData){
-
-            if(fusenData[url] === null || fusenData[url] === {}){
-                return;
-            }
-
-            $("#" + id).remove();
-            delete fusenData[url][id];
-
-            if(Object.keys(fusenData[url]).length === 0){
-               delete fusenData[url];
-            }
-
-            chrome.storage.local.set(fusenData, function () {
-
-                chrome.storage.local.get(url, function(fusenData_new) {
-                    for(var item in fusenData_new){
-                        console.log(fusenData_new[item]);
-                        for(var id in fusenData_new[item]){
-                            console.log(fusenData_new[item][id]);
-                        }
-                    }
-                });
-            });
+        if(fusenUtil.fusenData[url] === null || fusenUtil.fusenData[url] === {}){
+            return;
         }
 
+        $("#" + id).remove();
+        delete fusenUtil.fusenData[url][id];
 
-    });
+        if(Object.keys(fusenUtil.fusenData[url]).length === 0){
+            delete fusenUtil.fusenData[url];
+            chrome.storage.local.remove(url);
+        }else{
+            
+        }
 
+        chrome.storage.local.set(fusenUtil.fusenData, function () {
+
+            chrome.storage.local.get(url, function(fusenData_new) {
+                for(var item in fusenData_new){
+                    console.log(fusenData_new[item]);
+                    for(var id in fusenData_new[item]){
+                        console.log(fusenData_new[item][id]);
+                    }
+                }
+            });
+        });
+    }
 };
 
 
 fusenUtil.deleteFusenAll = function(){
-    chrome.storage.local.get(function(fusenData) {
 
-        for(var urlData in fusenData){
+        for(var urlData in fusenUtil.fusenData){
             if(url === urlData){
 
                 console.log("delete all fusen this page.");
@@ -253,7 +248,6 @@ fusenUtil.deleteFusenAll = function(){
                 return;
            }
         }
-    });
 };
 
 

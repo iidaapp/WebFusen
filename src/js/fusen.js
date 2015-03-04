@@ -73,6 +73,7 @@ $(document).ready(function(){
             }
         }
 
+        fusenUtil.fusenData = urlData;
     });
 
     return;
@@ -91,12 +92,8 @@ chrome.runtime.onMessage.addListener(function(msg, sender, sendResponse) {
 
     } else if(msg.command && (msg.command === "get_fusen_information")){
 
-        var item;
-        chrome.storage.local.get(url, function(fusenData) {
-            item = fusenData;
-            var json = fusenUtil.stringify(item);
-            sendResponse(json);
-        });    
+        var json = fusenUtil.stringify(fusenUtil.fusenData[url]);
+        sendResponse(json);    
 
     } else if(msg.command && (msg.command === "delete_fusen")){
 
