@@ -20,7 +20,7 @@
         "default_popup": "html/popup.html"
     },
 
-    "options_page": "html/options.html",
+    "options_page": "html/WebFusenOption.html",
 
     "background": {
         "scripts": ["js/background.js"]

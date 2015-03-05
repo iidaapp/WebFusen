@@ -6,6 +6,7 @@ $("#add-fusen").click(function(){
 	});
 
 	window.close();
+
 });
 
 $("a#delete").click(function(){
@@ -18,6 +19,20 @@ $("a#delete").click(function(){
 	window.close();
 });
 
+$("a#option").click(function(){
+
+	var optionsUrl = chrome.extension.getURL("") + "html/WebFusenOption.html";
+
+	chrome.tabs.query({ url: optionsUrl }, function(tabs) {
+		if(tabs.length){
+			chrome.tabs.update(tabs[0].id, { active: true });
+            setTimeout(window.close, 120);
+		}else{
+			chrome.tabs.create({url:optionsUrl}), window.close();
+		}
+	});
+	
+});
 
 var escapeHTML = function(val) {
       return $('<div />').text(val).html();
@@ -26,6 +41,12 @@ var escapeHTML = function(val) {
 $(document).ready(function(){
 	chrome.tabs.getSelected(null, function(tab){
 		
+		if(isChromeExtentionPage(tab.url)){
+			$("ul").remove();
+			var elements = "<ul><li class='sep'></li><li></li><li class='no-fusen'>( Can't create Fusen. )</li><li></li><li class='sep'></li></ul>";
+			$("body").append(elements);
+		}
+
         chrome.tabs.sendMessage(tab.id, {command: "get_fusen_information"}, function(jsonData){
 
         	if(jsonData === "undefined" || jsonData === null){
@@ -84,3 +105,15 @@ $(document).ready(function(){
         });
 	});
 });
+
+
+isChromeExtentionPage = function(url){
+	var word = " " + url;
+	var target = "chrome-extension://"
+
+	if(word.indexOf(" " + target) !== -1){
+		return true;
+	}
+
+	return false;
+};

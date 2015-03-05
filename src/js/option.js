@@ -2,24 +2,33 @@ $(document).ready(function(){
 
 
     var value = '';
-    var urlNo = {};
     var urlNoCount = 1000;
     chrome.storage.local.get(function(fusenData) {
 
         optionUtil.fusenData = fusenData;
+        optionUtil.urlNo = {};
 
         console.log(fusenData);
+        var hoge = {};
+
+        if(Object.keys(fusenData).length === 0){
+            $("#fusen-data").remove();
+
+            var noContentElement = "<h3> - no Fusen Data - </h3>";
+            $("body").append(noContentElement);
+        }
+
         for(var url in fusenData){
 
-            urlNo[url] = urlNoCount;
+            optionUtil.urlNo[url] = urlNoCount;
             console.log(fusenData[url]);
-            console.log(urlNo);
+            console.log(optionUtil.urlNo);
 
-            var buttonElement = "";
+            optionUtil.addButton(url, optionUtil.urlNo[url]);
             
             for(var id in fusenData[url]){
                 console.log(fusenData[url][id]);
-                optionUtil.addFusen(id, urlNoCount, url);
+                optionUtil.addFusen(id, urlNoCount);
 
                 $("#" + id + " .webfusen-textarea").val(fusenData[url][id].val);
 
