@@ -1,5 +1,22 @@
 $(document).ready(function(){
 
+    fusenUtil.readyModal();
+
+    $(document).on("click", "#delete-fusen-all", function(e){
+        var fusenElement = $(".filter.active")[0];
+
+        if(fusenElement.textContent === "All"){
+            optionUtil.openModal(0);
+        }else{
+
+            for(var url in optionUtil.urlNo){
+                if(fusenElement.textContent === url){
+                    optionUtil.openModal(parseInt(optionUtil.urlNo[url]));
+                }
+            }
+        }
+    });
+
 
     var value = '';
     var urlNoCount = 1000;
@@ -63,17 +80,4 @@ $(document).ready(function(){
 
     });
 
-    $(".content:not('.active + .content')").hide();    
-    $(".menu").hover(function(){
-        $ (this).addClass("hover")
-    },
-    function(){
-        $(this).removeClass("hover")
-        }); 
-    $ (".menu").click(function(){
-        $(".menu").removeClass("active");
-        $ (this).addClass("active");
-        $(".content:not('.active + .content')").fadeOut();
-        $ (".active + .content").fadeIn();  
-    });
 });

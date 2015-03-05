@@ -75,6 +75,7 @@
 .webfusen-config{
     display:none;
     background-color: #DCDCDC; 
+    text-align: left
 }
 
 ul.webfusen-config-menu{
@@ -101,6 +102,7 @@ li.webfusen-config-list{
     position:fixed;
     display: none;
     z-index: 99999999999;
+    color: #000000;
 }
 
 .webfusen-modal-button{

@@ -220,12 +220,35 @@ optionUtil.addButton = function(url, urlNo){
 
 optionUtil.deleteFusenAll = function(urlNo){
 
-        for(var urlData in optionUtil.fusenData){
-            if(urlNo === optionUtil.fusenData[urlData]){
+        if(urlNo === 0){
+            optionUtil.fusenData = {};
 
-                console.log("delete all fusen this URL : " + urlData);
+            $(".webfusen").remove();
+            $("#fusen-data").remove();
+            var noContentElement = "<h3> - no Fusen Data - </h3>";
+            $("body").append(noContentElement);
+
+            chrome.storage.local.clear();
+            return;
+        }
+
+        for(var url in optionUtil.urlNo){
+            if(urlNo === optionUtil.urlNo[url]){
+
+                console.log("delete all fusen this URL : " + url);
                 $(".webfusen." + urlNo).remove();
-                item = {};
+                
+                delete optionUtil.fusenData[url]
+                $("#" + optionUtil.urlNo[url]).remove();
+
+                if(Object.keys(optionUtil.fusenData).length === 0){
+                    $("#fusen-data").remove();
+
+                    var noContentElement = "<h3> - no Fusen Data - </h3>";
+                    $("body").append(noContentElement);
+                }
+            
+
                 chrome.storage.local.remove(url,function(){
                     chrome.storage.local.get(url, function(items){
                         if(items === {} || items === null){
@@ -237,5 +260,26 @@ optionUtil.deleteFusenAll = function(urlNo){
                 });
                 return;
            }
-        }
+       }
+        
+};
+
+
+
+optionUtil.openModal = function(urlNo){
+    fusenUtil.centeringModalSyncer();
+
+    $(".webfusen-modal").fadeIn("slow");
+    $(".webfusen-modal-overlay").fadeIn("slow");
+
+    $(window).resize(fusenUtil.centeringModalSyncer());
+
+    $(".webfusen-modal-overlay,.webfusen-modal-cancel").unbind().click(function(event) {
+        $(".webfusen-modal-overlay,.webfusen-modal").fadeOut("slow");
+    });
+
+    $(".webfusen-modal-confirm").unbind().click(function(event) {
+        optionUtil.deleteFusenAll(urlNo);
+        $(".webfusen-modal-overlay,.webfusen-modal").fadeOut("slow");
+    });
 };
