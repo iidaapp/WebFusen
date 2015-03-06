@@ -1,5 +1,24 @@
+body{
+    /* Background pattern from subtlepatterns.com */
+    background-image: url("images/congruent_outline.png");
+}
+
+.wrapper{
+    border: 3px;
+    border-color: #C0C0C0;
+    width: 850px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px; 
+}
+
 button.active {
-  background: #1aa;
+  background: #11aaaa;
+}
+
+button.active:hover {
+  background: #0D7F7F;
 }
 
 button {
@@ -10,11 +29,60 @@ button {
   color: #ddd;
   border-radius: 4px;
   cursor: pointer;
-  margin: 0 5px 5px;
+  margin: 5px;
+}
+
+button:hover {
+    background: #4B4B4B;
+}
+
+.controls{
+    margin: 10px 0 10px 0;
 }
 
 #Container .mix{
     display: none;
+}
+
+#delete-fusen-all-wrapper{
+    margin: 40px 0 40px 0;    
+}
+
+#delete-fusen-all{
+    cursor:pointer;
+}
+
+#delete-fusen-all:hover{
+    cursor:pointer;
+    color:#f00;
+}
+
+div.icon-twitter{
+    background-image: url("images/iconmonstr-twitter-3-icon-32_light.png");
+    background-repeat: no-repeat;
+    background-position: left;
+    height: 32px;
+    width: 32px;
+    float: left;
+    margin: 0 3px;
+}
+
+div.icon-twitter:hover{
+    background-image: url("images/iconmonstr-twitter-3-icon-32.png");
+}
+
+div.icon-github{
+    background-image: url("images/iconmonstr-github-3-icon-32_light.png");
+    background-repeat: no-repeat;
+    background-position: left;
+    height: 32px;
+    width: 32px;
+    float: left;
+    margin: 0 3px;
+}
+
+div.icon-github:hover{
+    background-image: url("images/iconmonstr-github-3-icon-32.png");
 }
 
 .sp-container{
@@ -91,8 +159,21 @@ button {
 .webfusen-config{
     display:none;
     background-color: #DCDCDC; 
+    text-align: left;
+    padding:4px;
 }
 
+.webfusen-config input{
+    width: auto;
+    height: auto;
+    margin: 4px 0 4px 0;
+    border-radius: 5px;
+    border-width: 0;
+}
+
+#input-text{
+    margin: 4px;
+}
 ul.webfusen-config-menu{
     padding: 0;
     margin: 0;

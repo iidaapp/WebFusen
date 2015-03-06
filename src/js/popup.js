@@ -41,7 +41,7 @@ var escapeHTML = function(val) {
 $(document).ready(function(){
 	chrome.tabs.getSelected(null, function(tab){
 		
-		if(isChromeExtentionPage(tab.url)){
+		if(!isHttpWebPage(tab.url)){
 			$("ul").remove();
 			var elements = "<ul><li class='sep'></li><li></li><li class='no-fusen'>( Can't create Fusen. )</li><li></li><li class='sep'></li></ul>";
 			$("body").append(elements);
@@ -107,9 +107,9 @@ $(document).ready(function(){
 });
 
 
-isChromeExtentionPage = function(url){
+isHttpWebPage = function(url){
 	var word = " " + url;
-	var target = "chrome-extension://"
+	var target = "http"
 
 	if(word.indexOf(" " + target) !== -1){
 		return true;

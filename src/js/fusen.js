@@ -27,6 +27,7 @@ $(document).ready(function(){
         fusenUtil.deleteFusen(id);
     });
 
+    fusenUtil.importCss('css/fusen-reset.css');
     fusenUtil.importCss('css/jquery-ui.min.css');
     fusenUtil.importCss('css/spectrum.css');
     fusenUtil.importCss('css/fusen.css');

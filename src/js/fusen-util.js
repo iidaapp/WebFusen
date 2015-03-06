@@ -5,21 +5,21 @@ fusenUtil.addFusen = function(time){
 
     // fusenElement
     var element;
-    element = "<div id='" + time + "' class='ui-widget-content webfusen'>";
+    element = "<div class='webfusen-reset'><div id='" + time + "' class='ui-widget-content webfusen'>";
     element += "<div class='webfusen-drag'></div>";
     element += "<div class='webfusen-close'><div class = 'webfusen-char'>×</div></div>";
     element += "<div class='webfusen-textarea-wrap'><textarea class='webfusen-textarea'></textarea></div>";
     element += "<div class='webfusen-config'>";
     element += "<ul class='webfusen-config-menu'>";
     element += "<li class='webfusen-config-list'><div class='webfusen-config-menu-text'>background-color</div><div class='picker'><input type='text' id='webfusen-background-color' /></div>";
-    element += "<input type='checkbox' id='transparent-window' />背景以外も透過</li>";
+    element += "<input type='checkbox' id='transparent-window' /><span id='input-text'>背景以外も透過</span></li>";
     element += "<li class='webfusen-config-list' id='webfusen-font-size'><div class='webfusen-config-menu-text'>font-size</div>";
-    element += "<input type='text' id='webfusen-font-size-value' size='3' maxlength='3' /> px";
+    element += "<input type='text' id='webfusen-font-size-value' size='3' maxlength='3' /><span id='input-text'> px</span>";
     element += "</li>";
     element += "<li class='webfusen-config-list' id=''><div class='webfusen-config-menu-text'>font-color</div><div class='picker'><input type='text' id='webfusen-font-color' /></div>";
     element += "</ul></div>";
     element += "<div class='webfusen-config-button'></div>";
-    element += "</div>";
+    element += "</div></div>";
 
     // fusenElement追加
     $(document.body).append(element);

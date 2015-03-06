@@ -1,6 +1,6 @@
 $(document).ready(function(){
 
-    fusenUtil.readyModal();
+    optionUtil.readyModal();
 
     $(document).on("click", "#delete-fusen-all", function(e){
         var fusenElement = $(".filter.active")[0];
@@ -29,10 +29,10 @@ $(document).ready(function(){
         var hoge = {};
 
         if(Object.keys(fusenData).length === 0){
-            $("#fusen-data").remove();
+            $("#fusen-available").remove();
 
             var noContentElement = "<h3> - no Fusen Data - </h3>";
-            $("body").append(noContentElement);
+            $("#fusen-data").append(noContentElement);
         }
 
         for(var url in fusenData){

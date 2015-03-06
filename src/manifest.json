@@ -1,19 +1,14 @@
 {
-    // 拡張機能の定義
-    "manifest_version": 2,  // マニフェストのバージョン ※"2"を指定
-    "name": "WebFusen",       // 拡張機能の名称
-    "version": "1.0",       // 拡張機能のバージョン
- 
-    "description": "Label For Web Pages",  // 拡張機能の概要
- 
-    // アイコンの設定
+    "manifest_version": 2,
+    "name": "WebFusen",
+    "version": "1.0", 
+    "description": "Label For Web Pages",
     "icons": {
-        "16": "icons/icon16.png",         // 16×16[px]アイコンファイルのパス
-        "48": "icons/icon48.png",         // 48×48[px]アイコンファイルのパス
-        "128": "icons/icon128.png"         // 128×128[px]アイコンファイルのパス
+        "16": "icons/icon16.png",
+        "48": "icons/icon48.png",
+        "128": "icons/icon128.png"
     },
- 
-    // ブラウザアクション
+
     "browser_action": {
         "default_icon": "icons/icon16.png",
         "default_title": "WebFusen",
@@ -21,10 +16,6 @@
     },
 
     "options_page": "html/WebFusenOption.html",
-
-    "background": {
-        "scripts": ["js/background.js"]
-    },
 
     "content_scripts": [{
         "matches": ["<all_urls>"],

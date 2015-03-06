@@ -1,0 +1,72 @@
+/* CSS Reset START */
+
+.webfusen-reset applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend
+{
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-style:normal;
+    font-weight: normal;
+    font-size: 100%;
+    vertical-align: baseline;
+}
+     
+.webfusen-reset input, textarea,{
+    margin: 0;
+    padding: 0;
+}
+ 
+.webfusen-reset ol, ul{
+    list-style:none;
+}
+ 
+.webfusen-reset table{
+    border-collapse: collapse; 
+    border-spacing:0;
+}
+ 
+.webfusen-reset caption, th{
+    text-align: left;
+}
+ 
+.webfusen-reset a:focus {
+    outline:none;
+}
+ 
+.webfusen-reset .clearfix:after {
+    content: "."; 
+    display: block;
+    clear: both;
+    height: 0;
+    visibility: hidden;
+}
+ 
+.webfusen-reset .clearfix {
+    min-height: 1px;
+}
+ 
+.webfusen-reset * html .clearfix {
+    height: 1px;
+    /*¥*//*/
+    height: auto;
+    overflow: hidden;
+    /**/
+}
+ 
+.webfusen-reset .both{
+    clear:both;
+}
+ 
+.webfusen-reset .inline_block {  
+    display: inline-block;  
+    *display: inline;  
+    *zoom: 1;  
+}
+
+/* CSS Reset END */

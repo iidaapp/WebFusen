@@ -75,7 +75,20 @@
 .webfusen-config{
     display:none;
     background-color: #DCDCDC; 
-    text-align: left
+    text-align: left;
+    padding:4px;
+}
+
+.webfusen-config input{
+    width: auto;
+    height: auto;
+    margin: 4px 0 4px 0;
+    border-radius: 5px;
+    border-width: 0;
+}
+
+#input-text{
+    margin: 4px;
 }
 
 ul.webfusen-config-menu{

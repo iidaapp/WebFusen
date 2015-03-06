@@ -4,18 +4,21 @@ var urlNo = {};
 
 optionUtil.addFusen = function(id, urlNoCount){
 
+    var datetime = new Date();
+    datetime.setTime(id);
+
     // fusenElement
     var element;
     element = "<div id='" + id + "' class='ui-widget-content webfusen mix " + urlNoCount + "' data-my-order='" + id +  "'>";
-    element += "<div class='webfusen-drag'></div>";
+    element += "<div class='webfusen-drag'>" + datetime.toLocaleString() +"</div>";
     element += "<div class='webfusen-close'><div class = 'webfusen-char'>×</div></div>";
     element += "<div class='webfusen-textarea-wrap'><textarea class='webfusen-textarea'></textarea></div>";
     element += "<div class='webfusen-config'>";
     element += "<ul class='webfusen-config-menu'>";
     element += "<li class='webfusen-config-list'><div class='webfusen-config-menu-text'>background-color</div><div class='picker'><input type='text' id='webfusen-background-color' /></div>";
-    element += "<input type='checkbox' id='transparent-window' />背景以外も透過</li>";
+    element += "<input type='checkbox' id='transparent-window' /><span id='input-text'>背景以外も透過</span></li>";
     element += "<li class='webfusen-config-list' id='webfusen-font-size'><div class='webfusen-config-menu-text'>font-size</div>";
-    element += "<input type='text' id='webfusen-font-size-value' size='3' maxlength='3' /> px";
+    element += "<input type='text' id='webfusen-font-size-value' size='3' maxlength='3' /><span id='input-text'> px</span>";
     element += "</li>";
     element += "<li class='webfusen-config-list' id=''><div class='webfusen-config-menu-text'>font-color</div><div class='picker'><input type='text' id='webfusen-font-color' /></div>";
     element += "</ul></div>";
@@ -184,12 +187,13 @@ optionUtil.deleteFusen = function(fusenElement){
 	            delete optionUtil.fusenData[url];
 	            $("#" + optionUtil.urlNo[url]).remove();
 	            chrome.storage.local.remove(url);
+                $("#all").click();
 
                 if(Object.keys(optionUtil.fusenData).length === 0){
-                    $("#fusen-data").remove();
+                    $("#fusen-available").remove();
 
                     var noContentElement = "<h3> - no Fusen Data - </h3>";
-                    $("body").append(noContentElement);
+                    $("#fusen-data").append(noContentElement);
                 }
 	        }else{
 	            
@@ -224,9 +228,9 @@ optionUtil.deleteFusenAll = function(urlNo){
             optionUtil.fusenData = {};
 
             $(".webfusen").remove();
-            $("#fusen-data").remove();
+            $("#fusen-available").remove();
             var noContentElement = "<h3> - no Fusen Data - </h3>";
-            $("body").append(noContentElement);
+            $("#fusen-data").append(noContentElement);
 
             chrome.storage.local.clear();
             return;
@@ -240,22 +244,19 @@ optionUtil.deleteFusenAll = function(urlNo){
                 
                 delete optionUtil.fusenData[url]
                 $("#" + optionUtil.urlNo[url]).remove();
+                $("#all").click();
 
                 if(Object.keys(optionUtil.fusenData).length === 0){
-                    $("#fusen-data").remove();
+                    $("#fusen-available").remove();
 
                     var noContentElement = "<h3> - no Fusen Data - </h3>";
-                    $("body").append(noContentElement);
+                    $("#fusen-data").append(noContentElement);
                 }
             
 
                 chrome.storage.local.remove(url,function(){
                     chrome.storage.local.get(url, function(items){
-                        if(items === {} || items === null){
-                            console.log("delete all fusen : ok");
-                        }else{
-                            console.log("delete all fusen : ng");
-                        }
+
                     });
                 });
                 return;
@@ -282,4 +283,21 @@ optionUtil.openModal = function(urlNo){
         optionUtil.deleteFusenAll(urlNo);
         $(".webfusen-modal-overlay,.webfusen-modal").fadeOut("slow");
     });
+};
+
+
+optionUtil.readyModal = function(){
+
+    var modalElement = "<div class='webfusen-modal'>";
+    modalElement += '<h2>Delete All Fusen</h2>';
+    modalElement += '<p>Are you sure you want to delete all Fusen data ?</p><br />';
+    modalElement += '<div class="webfusen-modal-cancel webfusen-modal-button">Cancel</div>';
+    modalElement += '<div class="webfusen-modal-confirm webfusen-modal-button">OK</div>';
+    modalElement += '</div>';
+
+    var overlayElement = "<div class='webfusen-modal-overlay'></div>"
+
+    $(document.body).append(overlayElement);
+    $(document.body).append(modalElement);
+
 };
