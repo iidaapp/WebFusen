@@ -1,0 +1,225 @@
+body{
+    /* Background pattern from subtlepatterns.com */
+    background-image: url("images/congruent_outline.png");
+}
+
+.wrapper{
+    border: 3px;
+    border-color: #C0C0C0;
+    width: 850px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px; 
+}
+
+button.active {
+  background: #11aaaa;
+}
+
+button.active:hover {
+  background: #0D7F7F;
+}
+
+button {
+  display: inline-block;
+  padding: 0.4em 0.8em;
+  background: #666;
+  border: 0;
+  color: #ddd;
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 5px;
+}
+
+button:hover {
+    background: #4B4B4B;
+}
+
+.controls{
+    margin: 10px 0 10px 0;
+}
+
+#Container .mix{
+    display: none;
+}
+
+#delete-fusen-all-wrapper{
+    margin: 40px 0 40px 0;    
+}
+
+#delete-fusen-all{
+    cursor:pointer;
+}
+
+#delete-fusen-all:hover{
+    cursor:pointer;
+    color:#f00;
+}
+
+div.icon-twitter{
+    background-image: url("images/iconmonstr-twitter-3-icon-32_light.png");
+    background-repeat: no-repeat;
+    background-position: left;
+    height: 32px;
+    width: 32px;
+    float: left;
+    margin: 0 3px;
+}
+
+div.icon-twitter:hover{
+    background-image: url("images/iconmonstr-twitter-3-icon-32.png");
+}
+
+div.icon-github{
+    background-image: url("images/iconmonstr-github-3-icon-32_light.png");
+    background-repeat: no-repeat;
+    background-position: left;
+    height: 32px;
+    width: 32px;
+    float: left;
+    margin: 0 3px;
+}
+
+div.icon-github:hover{
+    background-image: url("images/iconmonstr-github-3-icon-32.png");
+}
+
+.sp-container{
+    z-index: 9999999999;    
+}
+
+.webfusen{
+    width: 240px;
+    height: 120px;
+    z-index: 9999999;
+    background: rgba(255,255,255,0.5);
+    border: 1px solid #ddd;
+    opacity: 1;
+    font-family: 'Hiragino Kaku Gothic Pro',Meiryo,'MS PGothic',Helvetica,Arial,sans-serif;
+    position: relative;
+    margin: 10px;
+}
+
+.webfusen-textarea-wrap{
+	margin-top: 20px;
+    width: 240px;
+    height: 100px;
+    resize: none;
+    padding: 5px;
+    box-sizing:border-box;
+}
+
+.webfusen-textarea{
+    width: 100%;
+    height: 100%;
+    border:0px;
+    resize: none;
+    padding: 0px;
+    background: none;
+}
+
+.webfusen-drag{
+    height: 20px;
+    width: 220px;
+    left: 0;
+    top: 0;
+    background: #AFEEEE;
+    float: left;
+}
+
+.webfusen-close{
+    text-align: center;
+    display: table;
+    right: 0;
+    top: 0px;
+    width: 20px;
+    height: 20px;
+    background: #FF5042;
+    cursor: default;
+    font-size: 10px;
+    float: left;
+}
+
+.webfusen-char{
+    display: table-cell;
+    vertical-align:middle;
+}
+
+.webfusen-config-button{
+	position: absolute;
+    background-image: url("images/iconmonstr-gear-icon-16.png");
+    left: 1px;
+    bottom: 1px;
+    display: block;
+    width: 16px;
+    height: 16px;
+}
+
+.webfusen-config{
+    display:none;
+    background-color: #DCDCDC; 
+    text-align: left;
+    padding:4px;
+}
+
+.webfusen-config input{
+    width: auto;
+    height: auto;
+    margin: 4px 0 4px 0;
+    border-radius: 5px;
+    border-width: 0;
+}
+
+#input-text{
+    margin: 4px;
+}
+ul.webfusen-config-menu{
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+li.webfusen-config-list{
+    margin: 4px 0 8px 0;
+    font-size: 10px;
+}
+
+.webfusen-config-menu-text{
+    font-weight: bold;
+}
+
+.webfusen-modal{
+    width:50%;
+    margin:0;
+    padding:10px 20px;
+    border:2px solid #aaa;
+    background:#fff;
+    position:fixed;
+    display: none;
+    z-index: 99999999999;
+    color: #000000;
+}
+
+.webfusen-modal-button{
+    text-align: center;
+    text-decoration:underline;
+    width: 50px;
+    color:#00f;
+}
+
+.webfusen-modal-button:hover{
+    cursor:pointer;
+    color:#f00;
+}
+
+.webfusen-modal-overlay{
+    z-index:99999999900;
+    display:none;
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:120%;
+    background-color:rgba(0,0,0,0.75);
+}

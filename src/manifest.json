@@ -1,0 +1,32 @@
+{
+    "manifest_version": 2,
+    "name": "WebFusen",
+    "version": "1.0", 
+    "description": "Label For Web Pages",
+    "icons": {
+        "16": "icons/icon16.png",
+        "48": "icons/icon48.png",
+        "128": "icons/icon128.png"
+    },
+
+    "browser_action": {
+        "default_icon": "icons/icon16.png",
+        "default_title": "WebFusen",
+        "default_popup": "html/popup.html"
+    },
+
+    "options_page": "html/WebFusenOption.html",
+
+    "content_scripts": [{
+        "matches": ["<all_urls>"],
+        "js": ["js/tool/jquery-1.11.2.min.js", "js/tool/jquery-ui.min.js", "js/tool/spectrum.js", "js/fusen-util.js","js/fusen.js"],
+        "run_at": "document_idle"
+    }],
+
+    "web_accessible_resources": ["css/*", "css/images/*"],
+
+    "permissions": [
+        "storage",
+        "tabs"
+    ]
+}
